@@ -11,7 +11,7 @@ class DataTable extends Component {
         let res = await axios.delete("http://localhost:4000/crud", {
           data: { id: id }
         });
-        this.props.deleteItemFromState(res.id);
+        this.props.deleteItemFromState(res.data[0].id);
       } catch (err) {
         console.log(err);
       }
@@ -35,6 +35,7 @@ class DataTable extends Component {
                 buttonLabel="Edit"
                 item={item}
                 updateState={this.props.updateState}
+                addItemToState={this.props.addItemToState}
               />{" "}
               <Button color="danger" onClick={() => this.deleteItem(item.id)}>
                 Del

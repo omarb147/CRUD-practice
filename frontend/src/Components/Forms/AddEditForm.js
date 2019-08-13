@@ -19,7 +19,6 @@ class AddEditForm extends Component {
 
   submitFormAdd = async e => {
     e.preventDefault();
-
     try {
       const item = await axios.post("http://localhost:4000/crud", {
         first: this.state.first,
@@ -29,9 +28,9 @@ class AddEditForm extends Component {
         location: this.state.location,
         hobby: this.state.hobby
       });
-      console.log(item);
-      if (Array.isArray(item)) {
-        this.props.addItemToState(item[0]);
+      if (item.data.length) {
+        console.log(item.data[0]);
+        this.props.addItemToState(item.data[0]);
         this.props.toggle();
       } else {
         console.log("failure");

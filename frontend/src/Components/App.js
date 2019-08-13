@@ -3,9 +3,13 @@ import axios from "axios";
 import { Container, Row, Col } from "reactstrap";
 import { CSVLink } from "react-csv";
 import DataTable from "../Components/Tables/DataTable";
+import ModalForm from "../Components/Modals/Modal";
 
 class App extends Component {
-  state = { items: [] };
+  constructor() {
+    super();
+    this.state = { items: [] };
+  }
 
   async getItems() {
     try {
@@ -18,7 +22,7 @@ class App extends Component {
 
   addItemToState = item => {
     let prevState = this.state;
-    this.setState({ item: [...prevState.items, item] });
+    this.setState({ items: [...prevState.items, item] });
   };
 
   updateState = item => {
@@ -35,7 +39,6 @@ class App extends Component {
 
   deleteItemFromState = id => {
     const newItemList = this.state.items.filter(data => data.id !== id);
-
     this.setState({ items: newItemList });
   };
 
@@ -55,7 +58,7 @@ class App extends Component {
               <DataTable
                 items={this.state.items}
                 updateState={this.updateState}
-                deleteItem={this.deleteItemFromState}
+                deleteItemFromState={this.deleteItemFromState}
               />
               <CSVLink
                 filename={"db.csv"}
@@ -66,6 +69,11 @@ class App extends Component {
               >
                 Download CSV
               </CSVLink>
+              <ModalForm
+                buttonLabel="Add New"
+                updateState={this.updateState}
+                addItemToState={this.addItemToState}
+              />
             </Col>
           </Row>
         </Row>
